@@ -15,6 +15,7 @@
 		94F35EE51C1001DD00923C90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F35EE31C1001DD00923C90 /* LaunchScreen.storyboard */; };
 		94F35EF01C1001DD00923C90 /* Get_MovingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F35EEF1C1001DD00923C90 /* Get_MovingTests.swift */; };
 		94F35EFB1C1001DD00923C90 /* Get_MovingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F35EFA1C1001DD00923C90 /* Get_MovingUITests.swift */; };
+		94F35F0B1C10026C00923C90 /* CaptureMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F35F0A1C10026B00923C90 /* CaptureMotion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		94F35EF61C1001DD00923C90 /* Get MovingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Get MovingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F35EFA1C1001DD00923C90 /* Get_MovingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Get_MovingUITests.swift; sourceTree = "<group>"; };
 		94F35EFC1C1001DD00923C90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94F35F0A1C10026B00923C90 /* CaptureMotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaptureMotion.swift; path = ../CaptureMotion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		94F35ED61C1001DD00923C90 /* Get Moving */ = {
 			isa = PBXGroup;
 			children = (
+				94F35F0A1C10026B00923C90 /* CaptureMotion.swift */,
 				94F35ED71C1001DD00923C90 /* AppDelegate.swift */,
 				94F35ED91C1001DD00923C90 /* ViewController.swift */,
 				94F35EDB1C1001DD00923C90 /* Main.storyboard */,
@@ -196,6 +199,7 @@
 				TargetAttributes = {
 					94F35ED31C1001DD00923C90 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = DJM86A6U7U;
 					};
 					94F35EEA1C1001DD00923C90 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -259,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94F35F0B1C10026C00923C90 /* CaptureMotion.swift in Sources */,
 				94F35EDA1C1001DD00923C90 /* ViewController.swift in Sources */,
 				94F35ED81C1001DD00923C90 /* AppDelegate.swift in Sources */,
 				94F35EE01C1001DD00923C90 /* Get_Moving.xcdatamodeld in Sources */,
@@ -401,10 +406,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Get Moving/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FullScreenAhead.Get-Moving";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -412,10 +420,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Get Moving/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FullScreenAhead.Get-Moving";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -486,6 +497,7 @@
 				94F35F011C1001DD00923C90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94F35F021C1001DD00923C90 /* Build configuration list for PBXNativeTarget "Get MovingTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +506,7 @@
 				94F35F041C1001DD00923C90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94F35F051C1001DD00923C90 /* Build configuration list for PBXNativeTarget "Get MovingUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +515,7 @@
 				94F35F071C1001DD00923C90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
