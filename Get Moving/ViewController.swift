@@ -27,9 +27,6 @@ class ViewController: UIViewController {
     }
     
     
-    
-    var stepsTaken = NSNumber(int: 0)
-    
     func getPedometerData (){
         
         
@@ -43,16 +40,31 @@ class ViewController: UIViewController {
             
             if (error == nil) {
                 if (data != nil) {
-                    self.stepsTaken = (data?.numberOfSteps)!
                     
-                    print("stepsTaken: \(self.stepsTaken)")
-                    print("startDate: \(data?.startDate)")
-                    print("endDate: \(data?.endDate)")
-                    print("distance: \(data?.distance)")
-                    print("currentCadence: \(data?.currentCadence)")
-                    print("currentPace: \(data?.currentPace)")
-                    print("floorsAscended: \(data?.floorsAscended)")
-                    print("floorsDescended: \(data?.floorsDescended)")
+                    if let startDate = data?.startDate{
+                        print("startDate: \(startDate)")
+                    }
+                    if let endDate = data?.startDate{
+                        print("endDate: \(endDate)")
+                    }
+                    if let stepsTaken = data?.numberOfSteps{
+                        print("stepsTaken: \(stepsTaken)")
+                    }
+                    if let distance = data?.distance{
+                        print("distance: \(distance)")
+                    }
+                    if let currentCadence = data?.currentCadence{
+                        print("currentCadence: \(currentCadence)")
+                    }
+                    if let currentPace = data?.currentPace{
+                        print("currentPace: \(currentPace)")
+                    }
+                    if let floorsAscended = data?.floorsAscended{
+                        print("floorsAscended: \(floorsAscended)")
+                    }
+                    if let floorsDescended = data?.floorsDescended{
+                        print("floorsDescended: \(floorsDescended)")
+                    }
                 }
             }
             else{
@@ -64,7 +76,10 @@ class ViewController: UIViewController {
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if(error == nil){
-                    self.todaysSteps.text = "Today: \(data?.numberOfSteps)"
+                    
+                    if let steps = data?.numberOfSteps {
+                    self.todaysSteps.text = "Today: \(steps)"
+                    }
                 }
             })
             
