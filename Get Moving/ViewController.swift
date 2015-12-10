@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         getPedometerData()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("updateTodaysSteps"), userInfo: nil, repeats: true)
-    
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -61,7 +61,10 @@ class ViewController: UIViewController {
                     if let stepsTaken = data?.numberOfSteps{
                         print("stepsTaken: \(stepsTaken)")
                         self.todayStepsTotal = stepsTaken
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
                         self.todaysSteps.text = "\(self.todayStepsTotal)"
+                        })
                     }
                     if var distance = data?.distance{
                         print("distance: \(distance)")
@@ -71,11 +74,15 @@ class ViewController: UIViewController {
                         
                         if (self.userUsesMetricSystem == true){
                             distance = distance.floatValue / 1000
+                            dispatch_async(dispatch_get_main_queue(), {
                             self.todaysDistance.text = formatter.stringFromNumber(distance)! + " km"
+                            })
                         }
                         else{
                             distance = distance.floatValue * 0.00062137
+                            dispatch_async(dispatch_get_main_queue(), {
                             self.todaysDistance.text = formatter.stringFromNumber(distance)! + " miles"
+                            })
                         }
                         
                     }
@@ -110,7 +117,10 @@ class ViewController: UIViewController {
     func updateTodaysSteps(){
         if (0 < countToTodayStepsTotal){
             todayStepsTotal = todayStepsTotal.integerValue + 1
-            self.todaysSteps.text = "\(todayStepsTotal)"
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.todaysSteps.text = "\(self.todayStepsTotal)"
+            })
             countToTodayStepsTotal = countToTodayStepsTotal - 1
             
             if (countToTodayStepsTotal < 0){
