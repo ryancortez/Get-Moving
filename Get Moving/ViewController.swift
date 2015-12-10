@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var countToTodayStepsTotal = 0
     var timer = NSTimer()
     
-    override func viewDidLoad() {
+    override func viewDidAppear(animated: Bool){
         super.viewDidLoad()
         getPedometerData()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("updateTodaysSteps"), userInfo: nil, repeats: true)
@@ -49,6 +49,7 @@ class ViewController: UIViewController {
             data, error in
             
             if (error == nil) {
+                
                 if (data != nil) {
                     
                     if let startDate = data?.startDate{
