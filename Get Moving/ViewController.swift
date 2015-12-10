@@ -106,12 +106,11 @@ class ViewController: UIViewController {
             if let steps = data?.numberOfSteps {
                 for var i = 0; i < steps.integerValue; i++ {
                     dispatch_after(time, dispatch_get_main_queue()) {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            if(error == nil){
-                                todayStepsTotal = todayStepsTotal.floatValue + 1
-                                self.todaysSteps.text = "\(todayStepsTotal)"
-                            }
-                        })
+                        if(error == nil){
+                            todayStepsTotal = todayStepsTotal.floatValue + 1
+                            self.todaysSteps.text = "\(todayStepsTotal)"
+                        }
+                        
                         
                     }
                     
