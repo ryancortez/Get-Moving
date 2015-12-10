@@ -100,18 +100,29 @@ class ViewController: UIViewController {
         
         pedometer.startPedometerUpdatesFromDate(currentDate, withHandler: {data, error in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if(error == nil){
-                    
-                    if let steps = data?.numberOfSteps {
-                    
-                    todayStepsTotal = todayStepsTotal.floatValue + steps.floatValue
-                    self.todaysSteps.text = "\(todayStepsTotal)"
+            let delay = 1.0 * Double(NSEC_PER_SEC)
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            if let steps = data?.numberOfSteps {
+                for var i = 0; i < steps.integerValue; i++ {
+                    dispatch_after(time, dispatch_get_main_queue()) {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            if(error == nil){
+                                todayStepsTotal = todayStepsTotal.floatValue + 1
+                                self.todaysSteps.text = "\(todayStepsTotal)"
+                            }
+                        })
+                        
                     }
+                    
                 }
-            })
+                
+            }
+            
             
         })
+        
+        
         
     }
     
