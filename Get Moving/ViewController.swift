@@ -17,10 +17,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var todaysSteps: UILabel!
     @IBOutlet weak var todaysDistance: UILabel!
     var userUsesMetricSystem = false
+    var todayStepsTotal = NSNumber()
+    var countToTodayStepsTotal = 0
+    var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getPedometerData()
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("updateTodaysSteps"), userInfo: nil, repeats: true)
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,9 +35,6 @@ class ViewController: UIViewController {
     
     
     func getPedometerData (){
-        
-        var todayStepsTotal = NSNumber()
-        
         let currentDate = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: NSDate())
@@ -41,12 +43,9 @@ class ViewController: UIViewController {
         components.second = 0
         let timeZone = NSTimeZone.systemTimeZone()
         calendar.timeZone = timeZone
+        let beginningOfToday = calendar.dateFromComponents(components)!
         
-        let theBeginningOfToday = calendar.dateFromComponents(components)!
-        
-        
-        
-        pedometer.queryPedometerDataFromDate(theBeginningOfToday, toDate: currentDate, withHandler: {
+        pedometer.queryPedometerDataFromDate(beginningOfToday, toDate: currentDate, withHandler: {
             data, error in
             
             if (error == nil) {
@@ -60,8 +59,8 @@ class ViewController: UIViewController {
                     }
                     if let stepsTaken = data?.numberOfSteps{
                         print("stepsTaken: \(stepsTaken)")
-                        todayStepsTotal = stepsTaken
-                        self.todaysSteps.text = "\(todayStepsTotal)"
+                        self.todayStepsTotal = stepsTaken
+                        self.todaysSteps.text = "\(self.todayStepsTotal)"
                     }
                     if var distance = data?.distance{
                         print("distance: \(distance)")
@@ -99,30 +98,24 @@ class ViewController: UIViewController {
         })
         
         pedometer.startPedometerUpdatesFromDate(currentDate, withHandler: {data, error in
-            
-            let delay = 1.0 * Double(NSEC_PER_SEC)
-            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-            
             if let steps = data?.numberOfSteps {
-                for var i = 0; i < steps.integerValue; i++ {
-                    dispatch_after(time, dispatch_get_main_queue()) {
-                        if(error == nil){
-                            todayStepsTotal = todayStepsTotal.floatValue + 1
-                            self.todaysSteps.text = "\(todayStepsTotal)"
-                        }
-                        
-                        
-                    }
-                    
+                if(error == nil){
+                    self.countToTodayStepsTotal = self.countToTodayStepsTotal + steps.integerValue
                 }
-                
             }
-            
-            
         })
-        
-        
-        
+    }
+    
+    func updateTodaysSteps(){
+        if (0 < countToTodayStepsTotal){
+            todayStepsTotal = todayStepsTotal.integerValue + 1
+            self.todaysSteps.text = "\(todayStepsTotal)"
+            countToTodayStepsTotal = countToTodayStepsTotal - 1
+            
+            if (countToTodayStepsTotal < 0){
+                countToTodayStepsTotal = 0
+            }
+        }
     }
     
 }
