@@ -15,6 +15,7 @@ let pedometer = CMPedometer()
 class ViewController: UIViewController {
     
     @IBOutlet weak var todaysSteps: UILabel!
+    @IBOutlet weak var todaysDistance: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +50,14 @@ class ViewController: UIViewController {
                     }
                     if let stepsTaken = data?.numberOfSteps{
                         print("stepsTaken: \(stepsTaken)")
+                        self.todaysSteps.text = "\(stepsTaken)"
                     }
                     if let distance = data?.distance{
                         print("distance: \(distance)")
+                        let formatter = NSNumberFormatter()
+                        formatter.numberStyle = .DecimalStyle
+                        formatter.maximumFractionDigits = 1
+                        self.todaysDistance.text = formatter.stringFromNumber(distance)
                     }
                     if let currentCadence = data?.currentCadence{
                         print("currentCadence: \(currentCadence)")
