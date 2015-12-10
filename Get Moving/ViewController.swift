@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var todaysSteps: UILabel!
     @IBOutlet weak var todaysDistance: UILabel!
+    var userUsesMetricSystem = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +31,22 @@ class ViewController: UIViewController {
     
     func getPedometerData (){
         
+        var todayStepsTotal = NSNumber()
         
         let currentDate = NSDate()
-        let startDate = NSDate(timeIntervalSinceNow: -60*60*12)
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: NSDate())
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        let timeZone = NSTimeZone.systemTimeZone()
+        calendar.timeZone = timeZone
+        
+        let theBeginningOfToday = calendar.dateFromComponents(components)!
         
         
         
-        pedometer.queryPedometerDataFromDate(startDate, toDate: currentDate, withHandler: {
+        pedometer.queryPedometerDataFromDate(theBeginningOfToday, toDate: currentDate, withHandler: {
             data, error in
             
             if (error == nil) {
@@ -50,14 +60,24 @@ class ViewController: UIViewController {
                     }
                     if let stepsTaken = data?.numberOfSteps{
                         print("stepsTaken: \(stepsTaken)")
-                        self.todaysSteps.text = "\(stepsTaken)"
+                        todayStepsTotal = stepsTaken
+                        self.todaysSteps.text = "\(todayStepsTotal)"
                     }
-                    if let distance = data?.distance{
+                    if var distance = data?.distance{
                         print("distance: \(distance)")
                         let formatter = NSNumberFormatter()
                         formatter.numberStyle = .DecimalStyle
                         formatter.maximumFractionDigits = 1
-                        self.todaysDistance.text = formatter.stringFromNumber(distance)
+                        
+                        if (self.userUsesMetricSystem == true){
+                            distance = distance.floatValue / 1000
+                            self.todaysDistance.text = formatter.stringFromNumber(distance)! + " km"
+                        }
+                        else{
+                            distance = distance.floatValue * 0.00062137
+                            self.todaysDistance.text = formatter.stringFromNumber(distance)! + " miles"
+                        }
+                        
                     }
                     if let currentCadence = data?.currentCadence{
                         print("currentCadence: \(currentCadence)")
@@ -84,7 +104,9 @@ class ViewController: UIViewController {
                 if(error == nil){
                     
                     if let steps = data?.numberOfSteps {
-                    self.todaysSteps.text = "Today: \(steps)"
+                    
+                    todayStepsTotal = todayStepsTotal.floatValue + steps.floatValue
+                    self.todaysSteps.text = "\(todayStepsTotal)"
                     }
                 }
             })
