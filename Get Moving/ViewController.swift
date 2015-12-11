@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool){
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("getPedometerData"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         getPedometerData()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("updateTodaysSteps"), userInfo: nil, repeats: true)
         
@@ -115,7 +117,10 @@ class ViewController: UIViewController {
     }
     
     func updateTodaysSteps(){
-        if (0 < countToTodayStepsTotal){
+        
+        let limitForCount = 30
+        
+        if (0 < countToTodayStepsTotal && countToTodayStepsTotal < limitForCount){
             todayStepsTotal = todayStepsTotal.integerValue + 1
             
             dispatch_async(dispatch_get_main_queue(), {
@@ -126,6 +131,9 @@ class ViewController: UIViewController {
             if (countToTodayStepsTotal < 0){
                 countToTodayStepsTotal = 0
             }
+        }
+        else{
+            getPedometerData()
         }
     }
     
