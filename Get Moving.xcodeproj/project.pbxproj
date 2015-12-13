@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9484DC7E1C1AA3C200B0F48B /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9484DC7D1C1AA3C200B0F48B /* ChartView.swift */; };
 		94F35ED81C1001DD00923C90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F35ED71C1001DD00923C90 /* AppDelegate.swift */; };
 		94F35EDA1C1001DD00923C90 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F35ED91C1001DD00923C90 /* ViewController.swift */; };
 		94F35EDD1C1001DD00923C90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F35EDB1C1001DD00923C90 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9484DC7D1C1AA3C200B0F48B /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		94F35ED41C1001DD00923C90 /* Get Moving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Get Moving.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F35ED71C1001DD00923C90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94F35ED91C1001DD00923C90 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				94F35ED71C1001DD00923C90 /* AppDelegate.swift */,
 				94F35ED91C1001DD00923C90 /* ViewController.swift */,
 				94F35EDB1C1001DD00923C90 /* Main.storyboard */,
+				9484DC7D1C1AA3C200B0F48B /* ChartView.swift */,
 				94F35EE11C1001DD00923C90 /* Assets.xcassets */,
 				94F35EE31C1001DD00923C90 /* LaunchScreen.storyboard */,
 				94F35EE61C1001DD00923C90 /* Info.plist */,
@@ -266,6 +269,7 @@
 				94F35F0B1C10026C00923C90 /* CaptureMotion.swift in Sources */,
 				94F35EDA1C1001DD00923C90 /* ViewController.swift in Sources */,
 				94F35ED81C1001DD00923C90 /* AppDelegate.swift in Sources */,
+				9484DC7E1C1AA3C200B0F48B /* ChartView.swift in Sources */,
 				94F35EE01C1001DD00923C90 /* Get_Moving.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
