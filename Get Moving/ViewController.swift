@@ -11,7 +11,6 @@ import CoreMotion
 
 let pedometer = CMPedometer()
 
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var todaysSteps: UILabel!

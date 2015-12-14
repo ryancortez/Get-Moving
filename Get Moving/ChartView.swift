@@ -15,14 +15,17 @@ class ChartView: UIView {
     
     override func drawRect(rect: CGRect) {
         
+        let arrayOfData = [45, 11002, 3632, 616, 11002, 14002, 5]
+        
         // Number of columns wanted in the line chart
-        let numberOfColumns = 7
+        let numberOfColumns = arrayOfData.count
+        let maximumChartYValue: CGFloat = 17000
         let lineChartLineHeight: CGFloat = 2.0
         let lineChartLineWidth: CGFloat = min(bounds.width, bounds.height) * 2.0
         
         // Divide the chart into the number of columns
-        let sidesOfColumnsBuffer = 20
-        let maximumLineWidth = bounds.width - (CGFloat(sidesOfColumnsBuffer) * 2)
+        let sidesOfColumnsBuffer: CGFloat = 20
+        let maximumLineWidth = bounds.width
         let columnWidth = maximumLineWidth / CGFloat(numberOfColumns)
         
         // Create a path
@@ -32,9 +35,13 @@ class ChartView: UIView {
         
         
         // Place the start of the path at the left of the line chart
-        lineChartPath.moveToPoint(CGPoint(x: CGFloat(sidesOfColumnsBuffer), y: bounds.height / 2))
+        lineChartPath.moveToPoint(CGPoint(x: CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[0]) / CGFloat(maximumChartYValue))))
         
-        lineChartPath.addLineToPoint(CGPoint(x: bounds.width - CGFloat(sidesOfColumnsBuffer), y: bounds.height / 3))
+        for index in 1...6 {
+        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
+        }
+        
+//        lineChartPath.addLineToPoint(CGPoint(x: bounds.width, y: bounds.height - (bounds.height * CGFloat(arrayOfData[6]) / CGFloat(maximumChartYValue))))
         
         // Setting line chart's color and drawing the line
         UIColor.blueColor().setStroke()
