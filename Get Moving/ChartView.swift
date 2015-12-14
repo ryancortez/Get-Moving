@@ -20,13 +20,12 @@ class ChartView: UIView {
         // Number of columns wanted in the line chart
         let numberOfColumns = arrayOfData.count
         let maximumChartYValue: CGFloat = 17000
-        let lineChartLineHeight: CGFloat = 2.0
-        let lineChartLineWidth: CGFloat = min(bounds.width, bounds.height) * 2.0
+        let lineChartLineHeight: CGFloat = 7.0
         
         // Divide the chart into the number of columns
         let sidesOfColumnsBuffer: CGFloat = 20
-        let maximumLineWidth = bounds.width
-        let columnWidth = maximumLineWidth / CGFloat(numberOfColumns)
+        let maximumLineWidth = bounds.width - (sidesOfColumnsBuffer * 2)
+        let columnWidth:CGFloat = maximumLineWidth / CGFloat(numberOfColumns)
         
         // Create a path
         let lineChartPath = UIBezierPath()
@@ -38,7 +37,7 @@ class ChartView: UIView {
         lineChartPath.moveToPoint(CGPoint(x: CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[0]) / CGFloat(maximumChartYValue))))
         
         for index in 1...6 {
-        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
+        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + sidesOfColumnsBuffer + columnWidth, y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
         }
         
 //        lineChartPath.addLineToPoint(CGPoint(x: bounds.width, y: bounds.height - (bounds.height * CGFloat(arrayOfData[6]) / CGFloat(maximumChartYValue))))
