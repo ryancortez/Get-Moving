@@ -33,14 +33,13 @@ class ChartView: UIView {
         lineChartPath.lineWidth = lineChartLineHeight
         
         
-        // Place the start of the path at the left of the line chart
+        // Place the start of the path at the left of the line chart with a slight buffer for aesthetics
         lineChartPath.moveToPoint(CGPoint(x: CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[0]) / CGFloat(maximumChartYValue))))
         
+        // Draw the rest of the line using the data provided, there is a buffer for the inital point/column width
         for index in 1...6 {
-        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + sidesOfColumnsBuffer + columnWidth, y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
+        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + sidesOfColumnsBuffer, y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
         }
-        
-//        lineChartPath.addLineToPoint(CGPoint(x: bounds.width, y: bounds.height - (bounds.height * CGFloat(arrayOfData[6]) / CGFloat(maximumChartYValue))))
         
         // Setting line chart's color and drawing the line
         UIColor.blueColor().setStroke()
