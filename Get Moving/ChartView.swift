@@ -14,7 +14,13 @@ import UIKit
 class ChartView: UIView {
     
     override func drawRect(rect: CGRect) {
+        drawLineForChart()
+    
         
+
+    }
+    
+    func drawLineForChart() {
         let arrayOfData = [45, 11002, 3632, 616, 11002, 14002, 5]
         
         // Number of columns wanted in the line chart
@@ -22,57 +28,40 @@ class ChartView: UIView {
         let maximumChartYValue: CGFloat = 17000
         let lineChartLineHeight: CGFloat = 7.0
         
-        // Divide the chart into the number of columns
-        let sidesOfColumnsBuffer: CGFloat = 20
-        let maximumLineWidth = bounds.width - (sidesOfColumnsBuffer * 2)
-        let columnWidth:CGFloat = maximumLineWidth / CGFloat(numberOfColumns)
+        // Add spacing
+        let spacingOnLineChartSides: CGFloat = 20
+        let spacingUndertheLineChart: CGFloat = 5
         
-        // Create a path
+        // Divide the chart into an even number of columns
+        let maximumLineWidth:CGFloat = bounds.width - (spacingOnLineChartSides * 2)
+        let columnWidth:CGFloat = maximumLineWidth / (CGFloat(numberOfColumns) - 1)
+        print(bounds.width)
+        print("maximumLineWidth: \(maximumLineWidth)")
+        print("columnWidth: \(columnWidth)")
+        print("numberOfColumns: \(numberOfColumns)")
+        
+        // Create a path and set the width
         let lineChartPath = UIBezierPath()
-        
         lineChartPath.lineWidth = lineChartLineHeight
         
-        
         // Place the start of the path at the left of the line chart with a slight buffer for aesthetics
-        lineChartPath.moveToPoint(CGPoint(x: CGFloat(sidesOfColumnsBuffer), y: bounds.height - (bounds.height * CGFloat(arrayOfData[0]) / CGFloat(maximumChartYValue))))
+        lineChartPath.moveToPoint(CGPoint(x: CGFloat(spacingOnLineChartSides), y: bounds.height - (bounds.height * CGFloat(arrayOfData[0]) / CGFloat(maximumChartYValue) + spacingUndertheLineChart)))
+        print("Initial Point: (\(lineChartPath.currentPoint.x), \(lineChartPath.currentPoint.y))")
         
         // Draw the rest of the line using the data provided, there is a buffer for the inital point/column width
         for index in 1...6 {
-        lineChartPath.addLineToPoint(CGPoint(x: (CGFloat(index) * columnWidth) + sidesOfColumnsBuffer, y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue))))
+            lineChartPath.addLineToPoint(CGPoint(x: spacingOnLineChartSides + (CGFloat(index) * columnWidth), y: bounds.height - (bounds.height * CGFloat(arrayOfData[index]) / CGFloat(maximumChartYValue) + spacingUndertheLineChart)))
+            print("Current Point for index (\(index)): (\(lineChartPath.currentPoint.x), \(lineChartPath.currentPoint.y))")
         }
         
         // Setting line chart's color and drawing the line
         UIColor.blueColor().setStroke()
         lineChartPath.stroke()
-        
-// Hiding this example line drawing for now
-
-//        //set up the width and height variables
-//        //for the horizontal stroke
-//        let plusHeight: CGFloat = 2.0
-//        let plusWidth: CGFloat = min(bounds.width, bounds.height) * 2.0
-//        
-//        //create the path
-//        let plusPath = UIBezierPath()
-//        
-//        //set the path's line width to the height of the stroke
-//        plusPath.lineWidth = plusHeight
-//        
-//        //move the initial point of the path
-//        //to the start of the horizontal stroke
-//        plusPath.moveToPoint(CGPoint(
-//            x:bounds.width/2 - plusWidth/2,
-//            y:bounds.height/2))
-//        
-//        //add a point to the path at the end of the stroke
-//        plusPath.addLineToPoint(CGPoint(
-//            x:bounds.width/2 + plusWidth/2,
-//            y:bounds.height/2))
-//        
-//        //set the stroke color
-//        UIColor.blueColor().setStroke()
-//        
-//        //draw the stroke
-//        plusPath.stroke()
     }
+    func drawGoalLine() {
+        let goalLine = UIBezierPath()
+        
+    }
+    
+    
 }
