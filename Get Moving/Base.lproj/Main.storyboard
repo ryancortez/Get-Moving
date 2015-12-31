@@ -58,8 +58,8 @@
                                 <color key="textColor" red="0.039215686270000001" green="0.37254901959999998" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCS-22-OKN" customClass="ChartView" customModule="Get_Moving" customModuleProvider="target">
-                                <rect key="frame" x="15" y="322" width="562" height="258"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCS-22-OKN" customClass="DailyChartView" customModule="Get_Moving" customModuleProvider="target">
+                                <rect key="frame" x="15" y="329" width="562" height="251"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="CiU-F6-mwT">
@@ -72,6 +72,9 @@
                                     <segment title="Daily"/>
                                     <segment title="Weekly"/>
                                 </segments>
+                                <connections>
+                                    <action selector="chartSegmentChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="2Nq-MU-9z8"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -92,7 +95,7 @@
                             <constraint firstItem="L0Z-EQ-3mE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="h38-Ce-dzp"/>
                             <constraint firstItem="q8Y-gk-ScU" firstAttribute="top" secondItem="63E-Kb-Gpm" secondAttribute="bottom" constant="8" symbolic="YES" id="jem-R8-I8w"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CiU-F6-mwT" secondAttribute="trailing" constant="3" id="kH3-nO-8WQ"/>
-                            <constraint firstItem="dCS-22-OKN" firstAttribute="top" secondItem="CiU-F6-mwT" secondAttribute="bottom" constant="8" symbolic="YES" id="o6a-5w-9T6"/>
+                            <constraint firstItem="dCS-22-OKN" firstAttribute="top" secondItem="CiU-F6-mwT" secondAttribute="bottom" constant="15" id="o6a-5w-9T6"/>
                             <constraint firstItem="h6c-s8-J9R" firstAttribute="trailing" secondItem="q8Y-gk-ScU" secondAttribute="trailing" id="qG5-k6-amb"/>
                             <constraint firstItem="q8Y-gk-ScU" firstAttribute="top" secondItem="fhR-XI-hDG" secondAttribute="bottom" constant="70" id="rhw-D8-OSl"/>
                             <constraint firstItem="dCS-22-OKN" firstAttribute="trailing" secondItem="CiU-F6-mwT" secondAttribute="trailing" id="t2P-aE-sws"/>
