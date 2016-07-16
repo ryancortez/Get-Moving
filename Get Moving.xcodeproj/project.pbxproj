@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940F381E1CA48F6E00E4B967 /* PedometerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F381D1CA48F6E00E4B967 /* PedometerData.swift */; };
+		947907A41C51481E00FF5668 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947907A31C51481E00FF5668 /* SettingsView.swift */; };
 		9484DC7E1C1AA3C200B0F48B /* DailyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9484DC7D1C1AA3C200B0F48B /* DailyChartView.swift */; };
 		94A633BD1C349FC900B44F32 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A633BC1C349FC900B44F32 /* ChartView.swift */; };
 		94A633BF1C34A9EE00B44F32 /* HourlyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A633BE1C34A9EE00B44F32 /* HourlyChartView.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		940F381D1CA48F6E00E4B967 /* PedometerData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PedometerData.swift; sourceTree = "<group>"; };
+		947907A31C51481E00FF5668 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9484DC7D1C1AA3C200B0F48B /* DailyChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyChartView.swift; sourceTree = "<group>"; };
 		94A633BC1C349FC900B44F32 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		94A633BE1C34A9EE00B44F32 /* HourlyChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyChartView.swift; sourceTree = "<group>"; };
@@ -112,11 +116,13 @@
 				94F35F0A1C10026B00923C90 /* CaptureMotion.swift */,
 				94F35ED71C1001DD00923C90 /* AppDelegate.swift */,
 				94F35ED91C1001DD00923C90 /* ViewController.swift */,
+				940F381D1CA48F6E00E4B967 /* PedometerData.swift */,
 				94F35EDB1C1001DD00923C90 /* Main.storyboard */,
+				947907A31C51481E00FF5668 /* SettingsView.swift */,
+				94A633BC1C349FC900B44F32 /* ChartView.swift */,
 				9484DC7D1C1AA3C200B0F48B /* DailyChartView.swift */,
 				94A633BE1C34A9EE00B44F32 /* HourlyChartView.swift */,
 				94A633C01C34A9F800B44F32 /* WeeklyChartView.swift */,
-				94A633BC1C349FC900B44F32 /* ChartView.swift */,
 				94F35EE11C1001DD00923C90 /* Assets.xcassets */,
 				94F35EE31C1001DD00923C90 /* LaunchScreen.storyboard */,
 				94F35EE61C1001DD00923C90 /* Info.plist */,
@@ -278,9 +284,11 @@
 				94F35F0B1C10026C00923C90 /* CaptureMotion.swift in Sources */,
 				94F35EDA1C1001DD00923C90 /* ViewController.swift in Sources */,
 				94F35ED81C1001DD00923C90 /* AppDelegate.swift in Sources */,
+				947907A41C51481E00FF5668 /* SettingsView.swift in Sources */,
 				94A633BF1C34A9EE00B44F32 /* HourlyChartView.swift in Sources */,
 				9484DC7E1C1AA3C200B0F48B /* DailyChartView.swift in Sources */,
 				94F35EE01C1001DD00923C90 /* Get_Moving.xcdatamodeld in Sources */,
+				940F381E1CA48F6E00E4B967 /* PedometerData.swift in Sources */,
 				94A633C11C34A9F800B44F32 /* WeeklyChartView.swift in Sources */,
 				94A633BD1C349FC900B44F32 /* ChartView.swift in Sources */,
 			);
@@ -373,7 +381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -411,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -425,6 +433,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Get Moving/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FullScreenAhead.Get-Moving";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -439,6 +448,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Get Moving/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FullScreenAhead.Get-Moving";
 				PRODUCT_NAME = "$(TARGET_NAME)";

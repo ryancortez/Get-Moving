@@ -9,121 +9,95 @@
 import UIKit
 import CoreMotion
 
-let pedometer = CMPedometer()
+
 
 class ViewController: UIViewController {
     
+    let pedometer = Pedometer()
+    @IBOutlet weak var dailyChartView: DailyChartView!
+    @IBOutlet weak var weeklyChartView: WeeklyChartView!
+    @IBOutlet weak var hourlyChartView: HourlyChartView!
     @IBOutlet weak var todaysSteps: UILabel!
     @IBOutlet weak var todaysDistance: UILabel!
+    @IBOutlet weak var chartSegmentControl: UISegmentedControl!
     var userUsesMetricSystem = false
-    var todayStepsTotal = NSNumber()
+    var todayStepsTotal = 100
     var countToTodayStepsTotal = 0
     var timer = NSTimer()
+    var stepGoal = 3000
+    var days:Array<String> = []
+    var yValuesForDailyChartView:Array<Int> = []
     
-    override func viewDidAppear(animated: Bool){
+    override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("getPedometerData"), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        getPedometerData()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("updateTodaysSteps"), userInfo: nil, repeats: true)
+        showCorrectChartForSegmentedControl()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.getPedometerDataForToday), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        getPedometerDataForDailyChartView()
+        
+        do {
+            try refreshUI()
+        } catch {
+            PedometerDataError.MissingData(dataType: "Missing all data from CMPedometer")
+        }
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(ViewController.updateTodaysStepsInProgress), userInfo: nil, repeats: true)
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    @IBAction func chartSegmentChange(sender: AnyObject) {
+    // Mark: Update View
+    
+    func getPedometerDataForDailyChartView() {
         
-    }
-    
-    
-    func getPedometerData (){
-        let currentDate = NSDate()
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: NSDate())
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        let timeZone = NSTimeZone.systemTimeZone()
-        calendar.timeZone = timeZone
-        let beginningOfToday = calendar.dateFromComponents(components)!
+        var dates:Array<NSDate> = []
         
-        pedometer.queryPedometerDataFromDate(beginningOfToday, toDate: currentDate, withHandler: {
+        for index in -6 ... 0 {
+            dates.insert(calendar.dateByAddingUnit(.Day, value: index, toDate: NSDate(), options: [])!, atIndex: index + 6)
+        }
+        
+        for index in 0 ... 5 {
+            pedometer.queryPedometerDataFromDate(dates[index], toDate: dates[index + 1]) { (data, error) in
+                
+                let numberOfStepsForTheDay = data?.numberOfSteps.integerValue
+                self.dailyChartView.yValues.append(numberOfStepsForTheDay!)
+                
+                if (index == 5) {
+                    print(self.dailyChartView.yValues.description)
+                    self.dailyChartView.drawRect(self.dailyChartView.frame)
+                }
+            }
+        }
+    }
+
+
+    func getPedometerDataForToday () {
+        pedometer.queryPedometerDataFromDate(getBeginningOfTheDay(), toDate: NSDate(), withHandler: {
             data, error in
             
-            if (error == nil) {
-                
-                if (data != nil) {
-                    
-                    if let startDate = data?.startDate{
-                        print("startDate: \(startDate)")
-                    }
-                    if let endDate = data?.startDate{
-                        print("endDate: \(endDate)")
-                    }
-                    if let stepsTaken = data?.numberOfSteps{
-                        print("stepsTaken: \(stepsTaken)")
-                        self.todayStepsTotal = stepsTaken
-                        
-                        dispatch_async(dispatch_get_main_queue(), {
-                        self.todaysSteps.text = "\(self.todayStepsTotal)"
-                        })
-                    }
-                    if var distance = data?.distance{
-                        print("distance: \(distance)")
-                        let formatter = NSNumberFormatter()
-                        formatter.numberStyle = .DecimalStyle
-                        formatter.maximumFractionDigits = 1
-                        
-                        if (self.userUsesMetricSystem == true){
-                            distance = distance.floatValue / 1000
-                            dispatch_async(dispatch_get_main_queue(), {
-                            self.todaysDistance.text = formatter.stringFromNumber(distance)! + " km"
-                            })
-                        }
-                        else{
-                            distance = distance.floatValue * 0.00062137
-                            dispatch_async(dispatch_get_main_queue(), {
-                            self.todaysDistance.text = formatter.stringFromNumber(distance)! + " miles"
-                            })
-                        }
-                        
-                    }
-                    if let currentCadence = data?.currentCadence{
-                        print("currentCadence: \(currentCadence)")
-                    }
-                    if let currentPace = data?.currentPace{
-                        print("currentPace: \(currentPace)")
-                    }
-                    if let floorsAscended = data?.floorsAscended{
-                        print("floorsAscended: \(floorsAscended)")
-                    }
-                    if let floorsDescended = data?.floorsDescended{
-                        print("floorsDescended: \(floorsDescended)")
-                    }
+            dispatch_async(dispatch_get_main_queue(), {
+                if let pedometerData = data {
+                    self.todaysSteps.text = "\(pedometerData.numberOfSteps)"
+                    self.todaysDistance.text = "\(round(pedometerData.distance!.floatValue * 0.00062)) miles"
                 }
-            }
-            else{
-                print("There was an error retrieving the pedometer data: \(error.debugDescription)")
-            }
-        })
-        
-        pedometer.startPedometerUpdatesFromDate(currentDate, withHandler: {data, error in
-            if let steps = data?.numberOfSteps {
-                if(error == nil){
-                    self.countToTodayStepsTotal = self.countToTodayStepsTotal + steps.integerValue
-                }
+            })
+            
+            if error != nil {
+                print(error.debugDescription)
             }
         })
     }
     
-    func updateTodaysSteps(){
+    func updateTodaysStepsInProgress(){
         
         let limitForCount = 30
         
         if (0 < countToTodayStepsTotal && countToTodayStepsTotal < limitForCount){
-            todayStepsTotal = todayStepsTotal.integerValue + 1
+            todayStepsTotal = todayStepsTotal + 1
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.todaysSteps.text = "\(self.todayStepsTotal)"
@@ -135,9 +109,75 @@ class ViewController: UIViewController {
             }
         }
         else{
-            getPedometerData()
+            getPedometerDataForToday()
         }
     }
+    
+    func refreshUI() throws {
+        
+        guard let data = pedometer.data else {
+            throw PedometerDataError.MissingData(dataType: "None of the Pedometer Data exists")
+        }
+        
+        todaysSteps.text = "\(data.numberOfSteps)"
+        todaysDistance.text = "\(data.distance)"
+    }
+
+    // Mark: Helper Functions
+    
+    func getBeginningOfTheDay () -> NSDate {
+        
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: NSDate())
+        let timeZone = NSTimeZone.systemTimeZone()
+        
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        calendar.timeZone = timeZone
+        
+        return calendar.dateFromComponents(components)!
+    }
+    
+    
+    // Mark: Segmented Control
+    
+    func showCorrectChartForSegmentedControl() {
+        switch chartSegmentControl.selectedSegmentIndex {
+        case 0:
+            dailyChartView.hidden = true
+            weeklyChartView.hidden = true
+            hourlyChartView.hidden = false
+        case 1:
+            dailyChartView.hidden = false
+            weeklyChartView.hidden = true
+            hourlyChartView.hidden = true
+        case 2:
+            dailyChartView.hidden = true
+            weeklyChartView.hidden = false
+            hourlyChartView.hidden = true
+        default: break
+        }
+    }
+    
+    @IBAction func chartSegmentChange(sender: AnyObject) {
+        switch chartSegmentControl.selectedSegmentIndex {
+        case 0:
+            dailyChartView.hidden = true
+            weeklyChartView.hidden = true
+            hourlyChartView.hidden = false
+        case 1:
+            dailyChartView.hidden = false
+            weeklyChartView.hidden = true
+            hourlyChartView.hidden = true
+        case 2:
+            dailyChartView.hidden = true
+            weeklyChartView.hidden = false
+            hourlyChartView.hidden = true
+        default: break
+        }
+    }
+    
     
 }
 
