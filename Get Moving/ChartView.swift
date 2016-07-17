@@ -62,7 +62,8 @@ class ChartView: UIView {
                 arrayOfBars[Int(index)].addLineToPoint(CGPoint(x: barHorizontalPositionRelativeToView, y: stepCountRelativeToView))
                 
                 // Setting line chart's color and drawing the line
-                var labelColor = UIColor.blueColor()
+                let button = UIButton()
+                var labelColor = button.tintColor
                 
                 if stepCountRelativeToView < stepGoalRelativeToChartHeight {
                     UIColor.orangeColor().setStroke()

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Get Moving/ChartView.swift"
-            timestampString = "490475043.780917"
+            timestampString = "490475757.633822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "drawBarGraph(_:stepGoal:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Get Moving/ChartView.swift"
-            timestampString = "490475043.780917"
+            timestampString = "490475757.633822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "drawTextLabelsAboveBars(xValueForBar:yValueForBar:barWidth:absoluteValueForStepCount:withColor:)"
             landmarkType = "5">
          </BreakpointContent>
