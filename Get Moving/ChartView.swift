@@ -33,46 +33,62 @@ class ChartView: UIView {
         let numberOfColumns = pedometerData.count
         
         // Add spacing
-        let spacingOnLineChartSides: CGFloat = 40
-        let spacingBetweenBars: CGFloat = 1.0
+        let spacingOnLineChartSide: CGFloat = 40
+        let spaceBetweenBars: CGFloat = 1.0
         
         maximumChartHeight = CGFloat((2 * stepGoal) - (3 * (stepGoal / 10)))
         stepGoalRelativeToChartHeight = bounds.maxY - ((CGFloat(stepGoal) * bounds.maxY) / maximumChartHeight)
         
         // Divide the chart into an even number of columns
-        let maximumChartWidth:CGFloat = bounds.width - (spacingOnLineChartSides * 2)
+        let maximumChartWidth:CGFloat = bounds.width - (spacingOnLineChartSide * 2)
         //        let columnWidth:CGFloat = maximumChartWidth / (CGFloat(numberOfColumns) - 1)
-        let barWidth:CGFloat = (maximumChartWidth - (spacingBetweenBars * CGFloat((numberOfColumns - 2)))) / CGFloat(numberOfColumns - 1)
-        var arrayOfLines:[UIBezierPath] = []
+        let barWidth:CGFloat = (maximumChartWidth - (spaceBetweenBars * CGFloat((numberOfColumns - 2)))) / CGFloat(numberOfColumns - 1)
+        var arrayOfBars:[UIBezierPath] = []
         
         if (pedometerData.count > 0) {
             for _ in 0...(pedometerData.count - 1) {
-                arrayOfLines.append(UIBezierPath())
+                arrayOfBars.append(UIBezierPath())
             }
             
-            
             for index in 0...(pedometerData.count - 1) {
-                let yValue = CGFloat(pedometerData[Int(index)])
-                let stepCountRelativeToChart = bounds.maxY - ((yValue * bounds.maxY) / maximumChartHeight)
+                let stepCountAbsolute = CGFloat(pedometerData[Int(index)])
+                let stepCountRelativeToView = bounds.maxY - ((stepCountAbsolute * bounds.maxY) / maximumChartHeight)
+                let barHorizontalPositionRelativeToView = spacingOnLineChartSide + (CGFloat(index) * spaceBetweenBars) + (CGFloat(index) * barWidth)
                 // Create a path and set the width
-                arrayOfLines[Int(index)].lineWidth = barWidth
+                arrayOfBars[Int(index)].lineWidth = barWidth
                 
                 // Place the start of the path at the left of the line chart with a slight buffer for aesthetics
-                arrayOfLines[Int(index)].moveToPoint(CGPoint(x: spacingOnLineChartSides + (CGFloat(index) * spacingBetweenBars) + (CGFloat(index) * barWidth), y: bounds.maxY))
-                
-                arrayOfLines[Int(index)].addLineToPoint(CGPoint(x: spacingOnLineChartSides + (CGFloat(index) * spacingBetweenBars) + (CGFloat(index) * barWidth), y: stepCountRelativeToChart))
+                arrayOfBars[Int(index)].moveToPoint(CGPoint(x: barHorizontalPositionRelativeToView, y: bounds.maxY))
+                arrayOfBars[Int(index)].addLineToPoint(CGPoint(x: barHorizontalPositionRelativeToView, y: stepCountRelativeToView))
                 
                 // Setting line chart's color and drawing the line
-                if stepCountRelativeToChart < stepGoalRelativeToChartHeight {
+                var labelColor = UIColor.blueColor()
+                if stepCountRelativeToView < stepGoalRelativeToChartHeight {
                     UIColor.orangeColor().setStroke()
+                    labelColor = UIColor.orangeColor()
                 }
                 else{
                     let button = UIButton()
                     button.tintColor.setStroke()
                 }
-                arrayOfLines[Int(index)].stroke()
+                
+                // Draw labels for each bar
+                self.drawTextLabelsAboveBars(xValueForBar: barHorizontalPositionRelativeToView, yValueForBar: stepCountRelativeToView, barWidth: barWidth, absoluteValueForStepCount: stepCountAbsolute, withColor: labelColor)
+                
+                arrayOfBars[Int(index)].stroke()
             }
         }
+    }
+    
+    func drawTextLabelsAboveBars(xValueForBar xValueForBar: CGFloat, yValueForBar: CGFloat, barWidth: CGFloat, absoluteValueForStepCount: CGFloat, withColor color: UIColor) {
+        let labelHeight:CGFloat = 25
+        let labelWidth:CGFloat = barWidth
+        let label = UILabel(frame: CGRectMake(xValueForBar - (barWidth/2), yValueForBar - labelHeight, labelWidth, labelHeight))
+        
+        label.textAlignment = .Center
+        label.textColor = color
+        label.text = "\(Int(absoluteValueForStepCount))"
+        self.addSubview(label)
     }
     
     func drawGoalLine() {

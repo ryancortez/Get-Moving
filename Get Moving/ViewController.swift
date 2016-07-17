@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     var todayStepsTotal = 100
     var countToTodayStepsTotal = 0
     var timer = NSTimer()
-    var stepGoal = 3000
+    var stepGoal = 6000
     var days:Array<String> = []
     var yValuesForDailyChartView:Array<Int> = []
     
@@ -67,8 +67,11 @@ class ViewController: UIViewController {
                 self.dailyChartView.yValues.append(numberOfStepsForTheDay!)
                 
                 if (index == 5) {
-                    print(self.dailyChartView.yValues.description)
-                    self.dailyChartView.drawRect(self.dailyChartView.frame)
+                    self.dailyChartView.stepGoal = self.stepGoal
+                    
+//                    if (self.dailyChartView.yValues == []) {
+//                        self.dailyChartView.drawRect(self.dailyChartView.frame)
+//                    }
                 }
             }
         }
