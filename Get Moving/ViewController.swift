@@ -63,15 +63,18 @@ class ViewController: UIViewController {
         for index in 0 ... 5 {
             pedometer.queryPedometerDataFromDate(dates[index], toDate: dates[index + 1]) { (data, error) in
                 
-                let numberOfStepsForTheDay = data?.numberOfSteps.integerValue
-                self.dailyChartView.yValues.append(numberOfStepsForTheDay!)
+                if let numberOfStepsForTheDay = data?.numberOfSteps.integerValue {
+                    self.dailyChartView.yValues.append(numberOfStepsForTheDay)
+                }
                 
                 if (index == 5) {
                     self.dailyChartView.stepGoal = self.stepGoal
                     
-//                    if (self.dailyChartView.yValues == []) {
-//                        self.dailyChartView.drawRect(self.dailyChartView.frame)
-//                    }
+                    if (self.dailyChartView.yValues != []) {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.dailyChartView.drawRect(self.dailyChartView.frame)
+                        })
+                    }
                 }
             }
         }

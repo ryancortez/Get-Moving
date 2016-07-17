@@ -63,6 +63,7 @@ class ChartView: UIView {
                 
                 // Setting line chart's color and drawing the line
                 var labelColor = UIColor.blueColor()
+                
                 if stepCountRelativeToView < stepGoalRelativeToChartHeight {
                     UIColor.orangeColor().setStroke()
                     labelColor = UIColor.orangeColor()
